@@ -1,3 +1,5 @@
+# NOTE: This project is no longer maintened.
+
 `acts_as_solr Rails plugin`
 ======
 This plugin adds full text search capabilities and many other nifty features from Apache's [Solr](http://lucene.apache.org/solr/) to any Rails model.
