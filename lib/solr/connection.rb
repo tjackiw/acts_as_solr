@@ -140,7 +140,7 @@ class Solr::Connection
   def post(request)
     response = @connection.post(@url.path + "/" + request.handler,
                                 request.to_s,
-                                { "Content-Type" => request.content_type })
+                                build_headers({"Content-Type" => request.content_type})
   
     case response
     when Net::HTTPSuccess then response.body
@@ -158,5 +158,14 @@ private
     return response unless action
     response.each {|hit| action.call(hit)}
   end
-  
+	
+  # build headers
+  def build_headers(header)
+    authorization_header.update(header)
+  end
+
+  # generate http basic authentication header
+  def authorization_header
+    (@user || @password ? { 'Authorization' => 'Basic ' + ["#{@user}:#{ @password}"].pack('m').delete("\r\n") } : {})
+  end
 end
